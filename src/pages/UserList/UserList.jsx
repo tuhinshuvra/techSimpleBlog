@@ -1,21 +1,12 @@
 // import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import Loader from "../../components/shared/Loader/Loader";
 
 const UserList = () => {
-    const [deletingUser, setDeletingUser] = useState(null);
     const [allUser, setAllUser] = useState(['']);
-    const navigate = useNavigate();
-
-    // const closeModal = () => {
-    //     setDeletingUser(null);
-    // };
 
     console.log("All Users : ", allUser);
-
-
 
 
     useEffect(() => {
@@ -25,7 +16,6 @@ const UserList = () => {
                 setAllUser(data);
             });
     }, []);
-
 
 
     const handleMakeAdmin = (email) => {
@@ -41,24 +31,6 @@ const UserList = () => {
             });
     };
 
-    //   const handleDelete = (user) => {
-    //     fetch(`${process.env.REACT_APP_CABD_SERVER}/users/${user._id}`, {
-    //       method: "DELETE",
-    //     })
-    //       .then((respnse) => respnse.json())
-    //       .then((data) => {
-    //         console.log(data);
-    //         if (data.deletedCount > 0) {
-    //           toast("User Deleted Successfully.");
-    //         }
-    //         refetch();
-    //       });
-    //     // console.log(user._id);
-    //   };
-
-    // if (isLoading) {
-    //     return <Loader></Loader>;
-    // }
 
     return (
         <div>
@@ -92,24 +64,7 @@ const UserList = () => {
                                         </button>
                                     )}
                                 </td>
-                                {/* <td>
-                                    <Link to={`/dashboard/userUpdate/${user._id}`}>
-                                        <button
-                                            className=" fw-bold btn-sm btn btn-primary mx-1"
-                                        >
-                                            Update
-                                        </button>
-                                    </Link>
 
-                                    <button
-                                        onClick={() => setDeletingUser(user)}
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#confirmationModal"
-                                        className=" btn btn-sm  btn-outline-danger"
-                                    >
-                                        Delete
-                                    </button>
-                                </td> */}
                             </tr>
                         ))}
                     </tbody>
