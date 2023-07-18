@@ -9,35 +9,26 @@ import { toast } from "react-hot-toast";
 import { Form } from "react-bootstrap";
 
 const Register = () => {
+    useTitle("Register");
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { createUser, logOut, updateUser, setLoading } = useContext(AuthContext);
+    const { createUser, updateUser, setLoading } = useContext(AuthContext);
     const [signUpError, setSignUpError] = useState("");
-    // const [createdUserEmail, setCreatedUserEmail] = useState("");
-    const [accepted, setAccepted] = useState(false);
 
     const navigate = useNavigate();
-    useTitle("Register");
 
     const handleOnSubmit = (data) => {
         createUser(data.email, data.password)
             .then((result) => {
                 const user = result.user;
-                console.log("User Info:", user)
+                // console.log("Save User Info:", result)
                 toast.success("User created successfully.");
-                logOut()
-                    .then(() => {
-                        navigate("/login");
-                    })
-                    .catch((error) => {
-                        console.log("Error : ", error);
-                    });
 
                 const userInfo = {
                     displayName: data?.name,
                 };
                 updateUser(userInfo)
                     .then(() => {
-                        saveUser(data.name, data.email, data.userType);
+                        saveUser(data.name, data.email);
                     })
                     .catch((error) => {
                         // console.log(error)
@@ -54,25 +45,27 @@ const Register = () => {
             });
     };
 
-    const handleTermsAndConditions = (event) => {
-        setAccepted(event.target.checked);
+
+
+    const saveUser = (name, email) => {
+        const user = { name, email };
+        console.log("User Data :", user);
+
+        // fetch(`${process.env.REACT_APP_SERVER}/save_users`, {
+        fetch(`http://localhost:5000/save_users`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(user),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log("Saved user data: ", data);
+                navigate("/");
+            });
     };
 
-    // const saveUser = (name, email, userType) => {
-    //     const user = { name, email, userType };
-
-    //     fetch(`${process.env.REACT_APP_CABD_SERVER}/users`, {
-    //         method: "POST",
-    //         headers: {
-    //             "content-type": "application/json",
-    //         },
-    //         body: JSON.stringify(user),
-    //     })
-    //         .then((res) => res.json())
-    //         .then((data) => {
-    //             setCreatedUserEmail(email);
-    //         });
-    // };
 
     const handleShowPassword = () => {
         let x = document.getElementById("password");

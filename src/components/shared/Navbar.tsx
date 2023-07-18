@@ -52,6 +52,7 @@ const Navbar = () => {
                                     {user?.email ?
                                         <>
                                             <li><Link className="dropdown-item" onClick={handleLogOut}>LogOut</Link></li>
+                                            <li><Link className="dropdown-item" to="/userList">UserList</Link></li>
                                         </>
                                         :
                                         <>
