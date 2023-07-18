@@ -1,10 +1,14 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Footer.css";
 
 const Footer = () => {
     return (
-        <div>
-            <h2>This is Footer </h2>
-        </div>
+        <footer className="footer_bg ">
+            <footer className="bg-secondary">
+                <p className='text-center mb-0 copyright_text'> <small>Copyright @ 2023, All right reserved by techsimpleICT.com</small></p>
+            </footer >
+        </footer >
     );
 };
 
