@@ -63,6 +63,7 @@ const UserList = () => {
     return (
         <div>
             <h2 className="text-center  fw-bold  my-4">All User</h2>
+
             <div className="overflow-x-auto">
                 <table className="table table-hover  table-bordered text-center">
                     <thead>
