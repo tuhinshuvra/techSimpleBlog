@@ -1,22 +1,19 @@
-// import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import Loader from "../../components/shared/Loader/Loader";
 
 const UserList = () => {
-    const [allUser, setAllUser] = useState(['']);
+
+    const { data: allUser = [], refetch } = useQuery({
+        queryKey: ['allUser'],
+        queryFn: async () => {
+            const respone = await fetch('http://localhost:5000/show_users');
+            const data = respone.json();
+            return data;
+        }
+    })
 
     console.log("All Users : ", allUser);
-
-
-    useEffect(() => {
-        fetch(`http://localhost:5000/show_users`, {})
-            .then((response) => response.json())
-            .then((data) => {
-                setAllUser(data);
-            });
-    }, []);
-
 
     const handleMakeAdmin = (email) => {
         fetch(`http://localhost:5000/makeAdminUser/${email}`, {
@@ -27,6 +24,7 @@ const UserList = () => {
             .then((data) => {
                 if (data.modifiedCount > 0) {
                     toast.success("User Make Admin Successfully");
+                    refetch();
                 }
             });
     };

@@ -34,7 +34,10 @@ const Navbar = () => {
                                 <Link className="nav-link active" aria-current="page" to="/">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/allBlog">Blog</Link>
+                                <Link className="nav-link" to="/newBlogEntry">Blog Entry</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/blogList">Blogs</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/about">AboutUs</Link>

@@ -5,9 +5,10 @@ import Home from "../pages/Home";
 import About from "../pages/About";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
-import AllBlog from "../pages/Blog/AllBlog";
+import BlogList from "../pages/Blog/BlogList";
 import UserList from "../pages/UserList/UserList";
 import NewBlogEntry from "../pages/Blog/NewBlogEntry";
+import BlogDetails from "../pages/Blog/BlogDetails";
 
 
 
@@ -29,8 +30,13 @@ const router = createBrowserRouter([
                 element: <NewBlogEntry></NewBlogEntry>
             },
             {
-                path: "/allBlog",
-                element: <AllBlog></AllBlog>
+                path: "/blogList",
+                element: <BlogList></BlogList>
+            },
+            {
+                path: "/blogDetails/:blogId",
+                element: <BlogDetails></BlogDetails>,
+                loader: ({ params }) => fetch(`http://localhost:5000/blogDetails/${params.blogId}`)
             },
             {
                 path: "/login",
