@@ -9,6 +9,7 @@ import BlogList from "../pages/Blog/BlogList";
 import UserList from "../pages/UserList/UserList";
 import NewBlogEntry from "../pages/Blog/NewBlogEntry";
 import BlogDetails from "../pages/Blog/BlogDetails";
+import MyBlogs from "../pages/Blog/MyBlog";
 
 
 
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
             {
                 path: "/blogList",
                 element: <BlogList></BlogList>
+            },
+            {
+                path: "/myBlog",
+                element: <MyBlogs></MyBlogs>
             },
             {
                 path: "/blogDetails/:blogId",

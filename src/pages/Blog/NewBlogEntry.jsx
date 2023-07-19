@@ -44,9 +44,8 @@ const NewBlogEntry = () => {
 
     const handleNewBlogEntry = (data) => {
         const blogInfo = {
-            email: user?.email,
-            name: user?.displayName,
-
+            bloggerEmail: user?.email,
+            bloggerName: user?.displayName,
             blogTitle: data.blogTitle,
             blogDescription: data.blogDescription,
             blogConclusion: data.blogConclusion,
@@ -56,7 +55,7 @@ const NewBlogEntry = () => {
             // image: image,
 
         };
-        // console.log("Blog Data :", data);
+        console.log("Blog Info Data :", blogInfo);
 
         axios({
             url: `http://localhost:5000/save_blogs`,

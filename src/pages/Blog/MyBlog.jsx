@@ -1,38 +1,33 @@
 // import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
+import { AuthContext } from "../../components/AllContext/AuthProvider";
 
-const BlogList = () => {
+const MyBlogs = () => {
+    const { user } = useContext(AuthContext);
 
-    const { data: allBlog = [], refetch } = useQuery({
-        queryKey: ['allBlog'],
+    const email = user?.email;
+    const { data: myBlogs = [], refetch } = useQuery({
+        queryKey: ['myBlogs'],
         queryFn: async () => {
-            const respone = await fetch('http://localhost:5000/show_blogs');
+            const respone = await fetch(`http://localhost:5000/myPostedBlog?email=${email}`);
             const data = respone.json();
             return data;
         }
     })
 
-    console.log("All Blog : ", allBlog);
 
-    const handleMakeApprove = (_id) => {
-        fetch(`http://localhost:5000/makeApproveBlog/${_id}`, {
-            method: "PUT",
-            headers: {},
-        })
-            .then((respnse) => respnse.json())
-            .then((data) => {
-                if (data.modifiedCount > 0) {
-                    toast.success("The blog approved successfully");
-                    refetch();
-                }
-            });
-    };
+
+
+    console.log("All Blog : ", myBlogs);
+
+
 
 
     return (
         <div>
-            <h2 className="text-center  fw-bold  my-4">All Blogs</h2>
+            <h2 className="text-center  fw-bold  my-4">My Blogs</h2>
 
             <div className="overflow-x-auto">
                 <table className="table table-hover  table-bordered text-center">
@@ -46,8 +41,8 @@ const BlogList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {allBlog && <>
-                            {allBlog.map((blog, index) => (
+                        {myBlogs && <>
+                            {myBlogs.map((blog, index) => (
                                 <tr key={blog._id}>
                                     <td>{index + 1}</td>
                                     <td>{blog.blogTitle}</td>
@@ -55,16 +50,7 @@ const BlogList = () => {
                                     {/* {organization.slice(0, 25)} */}
                                     <td>{new Date(blog.publishDate).toLocaleDateString()}</td>
                                     <td>
-                                        {blog?.status === "approve" ? (
-                                            <p className=" fw-bolder text-success">Approved</p>
-                                        ) : (
-                                            <button
-                                                className=" btn btn-sm btn-info"
-                                                onClick={() => handleMakeApprove(blog._id)}
-                                            >
-                                                Pending
-                                            </button>
-                                        )}
+                                        {blog?.status === "approve" ? (<p className=" fw-bolder text-success">Approved</p>) : (<p>Pending</p>)}
                                     </td>
 
                                 </tr>
@@ -79,4 +65,4 @@ const BlogList = () => {
     );
 };
 
-export default BlogList;
+export default MyBlogs;

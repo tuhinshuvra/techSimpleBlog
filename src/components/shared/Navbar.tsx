@@ -2,10 +2,12 @@ import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AllContext/AuthProvider';
 import { toast } from 'react-hot-toast';
+import useAdmin from '../../hooks/useAdmin';
 
 const Navbar = () => {
     const { user, logOut, loading, setLoading } = useContext(AuthContext);
-    console.log("Login User Email: ", user?.email);
+    const [isAdmin] = useAdmin(user?.email);
+    console.log("Login User Data: ", user);
 
     const navigate = useNavigate();
 
@@ -36,9 +38,8 @@ const Navbar = () => {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/newBlogEntry">Blog Entry</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/blogList">Blogs</Link>
-                            </li>
+
+
                             <li className="nav-item">
                                 <Link className="nav-link" to="/about">AboutUs</Link>
                             </li>
@@ -54,8 +55,14 @@ const Navbar = () => {
                                 <ul className="dropdown-menu">
                                     {user?.email ?
                                         <>
-                                            <li><Link className="dropdown-item" onClick={handleLogOut}>LogOut</Link></li>
-                                            <li><Link className="dropdown-item" to="/userList">UserList</Link></li>
+                                            <li><Link className="nav-link" to="/myBlog">My Blog</Link></li>
+
+                                            {isAdmin && <>
+                                                <li><Link className="dropdown-item" to="/userList">UserList</Link></li>
+                                                <li> <Link className="nav-link" to="/blogList">All Blog</Link></li>
+                                            </>}
+                                            <li><Link className="dropdown-item fw-bold" onClick={handleLogOut}>LogOut</Link></li>
+
                                         </>
                                         :
                                         <>
