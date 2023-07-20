@@ -4,15 +4,17 @@ import { useContext } from "react";
 import { AuthContext } from "../../components/AllContext/AuthProvider";
 import './Blog.css';
 import { Link } from "react-router-dom";
+import useTitle from "../../hooks/useTitle";
 
 const MyBlogs = () => {
+    useTitle('MyBlog');
     const { user } = useContext(AuthContext);
 
     const email = user?.email;
     const { data: myBlogs = [], refetch } = useQuery({
         queryKey: ['myBlogs'],
         queryFn: async () => {
-            const respone = await fetch(`http://localhost:5000/myPostedBlog?email=${email}`);
+            const respone = await fetch(`https://tech-simple-blog-backend.vercel.app/myPostedBlog?email=${email}`);
             const data = respone.json();
             return data;
         }
@@ -44,7 +46,6 @@ const MyBlogs = () => {
                                     <td><Link className=" text-decoration-none" to={`/blogDetails/${blog?._id}`}>{blog?.blogTitle}</Link></td>
                                     <td>{blog?.blogDescription ? blog.blogDescription.slice(0, 150) : ""}</td>
                                     <td><img className=" blogImg" src={blog?.image} alt="blog_image" /> </td>
-                                    {/* {organization.slice(0, 25)} */}
                                     <td>{new Date(blog?.publishDate).toLocaleDateString()}</td>
                                     <td>
                                         {blog?.status === "approve" ? (<p className=" fw-bolder text-success">Approved</p>) : (<p>Pending</p>)}

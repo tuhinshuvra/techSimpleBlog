@@ -1,12 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
+import useTitle from "../../hooks/useTitle";
 
 const UserList = () => {
+    useTitle("UserList");
 
     const { data: allUser = [], refetch } = useQuery({
         queryKey: ['allUser'],
         queryFn: async () => {
-            const respone = await fetch('http://localhost:5000/show_users');
+            const respone = await fetch('https://tech-simple-blog-backend.vercel.app/show_users');
             const data = respone.json();
             return data;
         }
@@ -15,7 +17,7 @@ const UserList = () => {
     console.log("All Users : ", allUser);
 
     const handleMakeAdmin = (email) => {
-        fetch(`http://localhost:5000/makeAdminUser/${email}`, {
+        fetch(`https://tech-simple-blog-backend.vercel.app/makeAdminUser/${email}`, {
             method: "PUT",
             headers: {},
         })

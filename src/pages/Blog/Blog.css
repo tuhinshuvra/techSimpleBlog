@@ -1,4 +1,8 @@
 /* All blog related CSS */
+.blogbg {
+    background-color: rgb(234, 231, 224);
+}
+
 
 .blogImg {
     width: 60px;

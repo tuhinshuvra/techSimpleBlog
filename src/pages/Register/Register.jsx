@@ -52,7 +52,7 @@ const Register = () => {
         console.log("User Data :", user);
 
         // fetch(`${process.env.REACT_APP_SERVER}/save_users`, {
-        fetch(`http://localhost:5000/save_users`, {
+        fetch(`https://tech-simple-blog-backend.vercel.app/save_users`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

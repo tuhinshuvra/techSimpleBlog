@@ -2,13 +2,15 @@
 import { toast } from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import useTitle from "../../hooks/useTitle";
 
 const BlogList = () => {
+    useTitle("BlogList");
 
     const { data: allBlog = [], refetch } = useQuery({
         queryKey: ['allBlog'],
         queryFn: async () => {
-            const respone = await fetch('http://localhost:5000/show_blogs');
+            const respone = await fetch('https://tech-simple-blog-backend.vercel.app/show_blogs');
             const data = respone.json();
             return data;
         }
@@ -17,7 +19,7 @@ const BlogList = () => {
     console.log("All Blog : ", allBlog);
 
     const handleMakeApprove = (_id) => {
-        fetch(`http://localhost:5000/makeApproveBlog/${_id}`, {
+        fetch(`https://tech-simple-blog-backend.vercel.app/makeApproveBlog/${_id}`, {
             method: "PUT",
             headers: {},
         })

@@ -4,8 +4,11 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../components/AllContext/AuthProvider";
+import useTitle from "../../hooks/useTitle";
+import './Blog.css';
 
 const NewBlogEntry = () => {
+    useTitle("BlogEntry");
     const { user } = useContext(AuthContext);
 
     const { register, handleSubmit, formState: { errors }, } = useForm();
@@ -43,7 +46,7 @@ const NewBlogEntry = () => {
                     console.log("Blog Info Data :", blogInfo);
 
                     axios({
-                        url: `http://localhost:5000/save_blogs`,
+                        url: `https://tech-simple-blog-backend.vercel.app/save_blogs`,
                         method: "POST",
                         headers: { 'Content-type': 'application/json; charset=UTF-8' },
                         data: blogInfo,
@@ -64,7 +67,7 @@ const NewBlogEntry = () => {
 
 
     return (
-        <div>
+        <div className=" p-4">
             <h2 className=" text-center fw-bold my-4">Blog Entry</h2>
 
             <form onSubmit={handleSubmit(handleNewBlogEntry)}>

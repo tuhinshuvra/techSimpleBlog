@@ -10,6 +10,8 @@ import UserList from "../pages/UserList/UserList";
 import NewBlogEntry from "../pages/Blog/NewBlogEntry";
 import BlogDetails from "../pages/Blog/BlogDetails";
 import MyBlogs from "../pages/Blog/MyBlog";
+import AdminRoute from "./AdminRoute";
+import PrivateRoute from "./PrivateRoute";
 
 
 
@@ -28,20 +30,20 @@ const router = createBrowserRouter([
             },
             {
                 path: "/newBlogEntry",
-                element: <NewBlogEntry></NewBlogEntry>
+                element: <PrivateRoute><NewBlogEntry></NewBlogEntry></PrivateRoute>
             },
             {
                 path: "/blogList",
-                element: <BlogList></BlogList>
+                element: <AdminRoute> <BlogList></BlogList></AdminRoute>
             },
             {
                 path: "/myBlog",
-                element: <MyBlogs></MyBlogs>
+                element: <PrivateRoute> <MyBlogs></MyBlogs></PrivateRoute>
             },
             {
                 path: "/blogDetails/:blogId",
                 element: <BlogDetails></BlogDetails>,
-                loader: ({ params }) => fetch(`http://localhost:5000/blogDetails/${params.blogId}`)
+                loader: ({ params }) => fetch(`https://tech-simple-blog-backend.vercel.app/blogDetails/${params.blogId}`)
             },
             {
                 path: "/login",
@@ -53,7 +55,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/userList",
-                element: <UserList></UserList>
+                element: <AdminRoute> <UserList></UserList></AdminRoute>
             },
         ]
 

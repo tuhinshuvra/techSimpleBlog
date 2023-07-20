@@ -1,7 +1,4 @@
-// import { useQuery } from "@tanstack/react-query";
-import { toast } from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
 import HomePageBlogDisplay from "./HomePageBlogDisplay";
 
 const HomePageBlogs = () => {
@@ -9,7 +6,7 @@ const HomePageBlogs = () => {
     const { data: allBlog = [], refetch } = useQuery({
         queryKey: ['allBlog'],
         queryFn: async () => {
-            const respone = await fetch('http://localhost:5000/show_blogs');
+            const respone = await fetch('https://tech-simple-blog-backend.vercel.app/show_blogs');
             const data = respone.json();
             return data;
         }
