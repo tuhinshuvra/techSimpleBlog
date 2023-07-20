@@ -6,7 +6,7 @@ const Footer = () => {
     return (
         <footer className="footer_bg ">
             <footer className="bg-secondary">
-                <p className='text-center mb-0 copyright_text'> <small>Copyright @ 2023, All right reserved by techsimpleICT.com</small></p>
+                <p className='text-center mb-0 copyright_text'> <small>Copyright @ 2023, All right reserved by techsimpleblog.com</small></p>
             </footer >
         </footer >
     );

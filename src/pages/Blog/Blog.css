@@ -1,1 +1,11 @@
 /* All blog related CSS */
+
+.blogImg {
+    width: 60px;
+    border-radius: 50%;
+}
+
+.blogImageHome {
+    width: 100px;
+    border-radius: 10%;
+}

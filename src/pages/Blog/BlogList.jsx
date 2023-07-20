@@ -1,6 +1,7 @@
 // import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 const BlogList = () => {
 
@@ -50,7 +51,7 @@ const BlogList = () => {
                             {allBlog.map((blog, index) => (
                                 <tr key={blog._id}>
                                     <td>{index + 1}</td>
-                                    <td>{blog.blogTitle}</td>
+                                    <td><Link className=" text-decoration-none" to={`/blogDetails/${blog?._id}`}>{blog?.blogTitle}</Link></td>
                                     <td>{blog.blogDescription ? blog.blogDescription.slice(0, 150) : ""}</td>
                                     {/* {organization.slice(0, 25)} */}
                                     <td>{new Date(blog.publishDate).toLocaleDateString()}</td>

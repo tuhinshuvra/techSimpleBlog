@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -7,72 +7,60 @@ import { AuthContext } from "../../components/AllContext/AuthProvider";
 
 const NewBlogEntry = () => {
     const { user } = useContext(AuthContext);
-    const [compressedFile, setCompressedFile] = useState(null);
 
     const { register, handleSubmit, formState: { errors }, } = useForm();
     const navigate = useNavigate();
 
-
-
-    // const handleCompressedUpload = (e) => {
-    //   const image = e.target.files[0];
-    //   new Compressor(image, {
-    //     quality: 0.8,  
-    //     success: (compressedResult) => {
-    //       setCompressedFile(res)
-    //     },
-    //   });
-    // };
-
-
-
-
-    const [image, setImage] = useState(null);
-
-    const handleFileInputChange = async (e) => {
-        const field = e.target.name;
-        const file = e.target.files[0];
-        const base64 = await convertToBase64(file);
-        const newData = { ...image };
-        newData[field] = base64;
-
-        setImage(newData);
-    };
-    // console.log("xx", image)
-
     const publishDate = new Date();
 
+    const imageHostKey = `755410aab80a39b03b11cf0eaecb66fb`;
+
+    console.log("imageHostKey : ", imageHostKey);
+
     const handleNewBlogEntry = (data) => {
-        const blogInfo = {
-            bloggerEmail: user?.email,
-            bloggerName: user?.displayName,
-            blogTitle: data.blogTitle,
-            blogDescription: data.blogDescription,
-            blogConclusion: data.blogConclusion,
-            publishDate: publishDate,
-
-            //image: imgData.data.url,
-            // image: image,
-
-        };
-        console.log("Blog Info Data :", blogInfo);
-
-        axios({
-            url: `http://localhost:5000/save_blogs`,
-            method: "POST",
-            headers: { 'Content-type': 'application/json; charset=UTF-8' },
-            data: blogInfo,
+        const image = data.image[0];
+        const formData = new FormData();
+        formData.append('image', image);
+        const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+        fetch(url, {
+            method: 'POST',
+            body: formData
         })
-            .then((response) => {
-                // console.log("blog data: ", response);
-                if (response.data) {
-                    toast("The Blog Saved Successfully");
-                    navigate("/blogList");
+            .then(res => res.json())
+            .then(imgData => {
+                if (imgData.success) {
+                    const blogInfo = {
+                        bloggerEmail: user?.email,
+                        bloggerName: user?.displayName,
+                        blogTitle: data.blogTitle,
+                        blogDescription: data.blogDescription,
+                        image: imgData.data.url,
+                        blogConclusion: data.blogConclusion,
+                        publishDate: publishDate,
+
+
+                    };
+                    console.log("Blog Info Data :", blogInfo);
+
+                    axios({
+                        url: `http://localhost:5000/save_blogs`,
+                        method: "POST",
+                        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+                        data: blogInfo,
+                    })
+                        .then((response) => {
+                            // console.log("blog data: ", response);
+                            if (response.data) {
+                                toast("The Blog Saved Successfully");
+                                navigate("/myBlog");
+                            }
+                            // const destination = location?.state?.from || "/";
+                            // navigate(location?.state?.from || "/", { replace: true });
+                        })
                 }
-                // const destination = location?.state?.from || "/";
-                // navigate(location?.state?.from || "/", { replace: true });
             })
-    };
+    }
+
 
 
     return (
@@ -105,6 +93,17 @@ const NewBlogEntry = () => {
                         placeholder="Blog Description"
                     // maxLength={10000}
                     />
+                </div>
+
+                <div className="form-control w-full">
+                    <label className="label"><span className="label-text">Photo</span> </label>
+                    <input type="file"
+                        name='image'
+                        {...register("image", { required: true })}
+                        placeholder="Image"
+                        className="input input-bordered w-full"
+                    />
+                    {errors.photo && <p className='text-red-600'>Upload Product Photo</p>}
                 </div>
 
                 <div>

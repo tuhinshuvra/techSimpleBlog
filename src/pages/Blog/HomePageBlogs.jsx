@@ -2,6 +2,7 @@
 import { toast } from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import HomePageBlogDisplay from "./HomePageBlogDisplay";
 
 const HomePageBlogs = () => {
 
@@ -24,39 +25,15 @@ const HomePageBlogs = () => {
 
     return (
         <div>
-
-
-            <div className="overflow-x-auto">
-                <table className="table table-hover  table-bordered ">
-                    <thead>
-                        <tr className=" text-center table-secondary">
-                            <th>SL</th>
-                            <th>Blog Title</th>
-                            <th>Blog Description</th>
-                            <th>Publish Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {approvedBlog && <>
-                            {approvedBlog.map((blog, index) => (
-                                <tr key={blog._id}>
-                                    <td>{index + 1}</td>
-                                    <td>
-                                        <Link className=" text-decoration-none" to={`/blogDetails/${blog._id}`}>{blog.blogTitle}</Link>
-                                    </td>
-                                    <td>{blog.blogDescription ? blog.blogDescription.slice(0, 150) : ""}</td>
-                                    {/* {organization.slice(0, 25)} */}
-                                    <td>{new Date(blog.publishDate).toLocaleDateString()}</td>
-
-
-                                </tr>
-                            ))}
-
-                        </>}
-                    </tbody>
-                </table>
-
-            </div>
+            {approvedBlog && <>
+                {approvedBlog.map((blog) => (
+                    <HomePageBlogDisplay
+                        key={blog._id}
+                        blog={blog}
+                    >
+                    </HomePageBlogDisplay>
+                ))}
+            </>}
         </div>
     );
 };

@@ -14,7 +14,7 @@ const Navbar = () => {
     const handleLogOut = () => {
         logOut()
             .then(() => {
-                toast("User logout successfully!", { position: 'top-right', });
+                toast.success("User logout successfully!", { duration: 1000 });
                 navigate("/");
             })
             .catch((error) => {
@@ -35,10 +35,6 @@ const Navbar = () => {
                             <li className="nav-item">
                                 <Link className="nav-link active" aria-current="page" to="/">Home</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/newBlogEntry">Blog Entry</Link>
-                            </li>
-
 
                             <li className="nav-item">
                                 <Link className="nav-link" to="/about">AboutUs</Link>
@@ -50,24 +46,25 @@ const Navbar = () => {
                             }
                             <li className="nav-item dropdown">
                                 <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Authentication
+                                    {user?.email ? <>Gate</> : <>Login</>}
                                 </Link>
                                 <ul className="dropdown-menu">
                                     {user?.email ?
                                         <>
-                                            <li><Link className="nav-link" to="/myBlog">My Blog</Link></li>
+                                            <li><Link className="dropdown-item fw-bold" to="/newBlogEntry">Blog Entry</Link></li>
+                                            <li><Link className="dropdown-item fw-bold" to="/myBlog">My Blogs</Link></li>
 
                                             {isAdmin && <>
-                                                <li><Link className="dropdown-item" to="/userList">UserList</Link></li>
-                                                <li> <Link className="nav-link" to="/blogList">All Blog</Link></li>
+                                                <li><Link className=" dropdown-item fw-bold " to="/userList">UserList</Link></li>
+                                                <li> <Link className=" dropdown-item fw-bold" to="/blogList">All Blog</Link></li>
                                             </>}
                                             <li><Link className="dropdown-item fw-bold" onClick={handleLogOut}>LogOut</Link></li>
 
                                         </>
                                         :
                                         <>
-                                            <li><Link className="dropdown-item" to="/register">Register</Link></li>
-                                            <li><Link className="dropdown-item" to="/login">Login</Link></li>
+                                            <li><Link className="dropdown-item fw-bold" to="/register">Register</Link></li>
+                                            <li><Link className="dropdown-item fw-bold" to="/login">Login</Link></li>
                                         </>
                                     }
                                     <li></li>
